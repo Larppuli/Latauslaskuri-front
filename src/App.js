@@ -125,28 +125,12 @@ function App() {
       if (i === 0) {
         const timeShare = (60 - startingDate.getMinutes()) / finalTime;
         finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
-        console.log("LOOP 1")
-        console.log("timeshare:", timeShare)
-        console.log("finaltime: ", finalTime)
-        console.log("finalprice:", finalPrice)
-        console.log("sntKWhArray[i].price: ", sntKWhArray[i].price)
       } else if (!(i === sntKWhArray.length - 1)) {
         const timeShare = 60 / finalTime;
         finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
-        console.log(timeShare * finalKWh * sntKWhArray[i].price)
-        console.log("LOOP 2")
-        console.log("timeshare:", timeShare)
-        console.log("finaltime: ", finalTime)
-        console.log("finalprice:", finalPrice)
-        console.log("sntKWhArray[i].price: ", sntKWhArray[i].price)
       } else {
         const timeShare = endingDate.getMinutes() / finalTime;
         finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
-        console.log("LOOP 3")
-        console.log("timeshare:", timeShare)
-        console.log("finaltime: ", finalTime)
-        console.log("finalprice:", finalPrice)
-        console.log("sntKWhArray[i].price: ", sntKWhArray[i].price)
       }
     }
 
@@ -180,7 +164,7 @@ function App() {
         if (response.ok) {
           window.alert('Latauskerta tallennettu');
           console.log('Loading saved:', newLoading);
-          //window.location.reload();
+          window.location.reload();
         } else {
           window.alert('Jokin meni pieleen');
           console.error('Error saving loading:', response.status);
