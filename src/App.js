@@ -39,6 +39,11 @@ function App() {
     setSelectedMeterNum(meterNum);
   };
 
+  const handleLastMeterNumChange = (lastMeterNum) => {
+    setLastMeterNum(lastMeterNum);
+    console.log(lastMeterNum)
+  };
+
   const handleFixedPriceChange = (fixedPrice) => {
     setSelectedFixedPrice(fixedPrice);
   };
@@ -90,11 +95,10 @@ function App() {
   };
 
   const handleSave = async () => {
-    console.log("minuutit", selectedMinute)
-    console.log("tunnit", selectedHour)
     const startingDate = new Date(`${selectedStartingDate}T${selectedStartingTime}:00.000`);
     const endingDate = new Date(startingDate.getTime() + selectedMinute * 60000);
     endingDate.setMinutes(endingDate.getMinutes() + selectedHour * 60);
+    const finalKWh = parseFloat(selectedMeterNum - lastMeterNum).toFixed(2);
 
     const sntKWhArray = [];
 
@@ -114,14 +118,44 @@ function App() {
       day = String(date.getDate()).padStart(2, '0');
     }
 
-    
+    let finalPrice = 0;
+
+    const finalTime = selectedMinute + selectedHour * 60
+    for (let i = 0; i < sntKWhArray.length; i++) {
+      if (i === 0) {
+        const timeShare = (60 - startingDate.getMinutes()) / finalTime;
+        finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
+        console.log("LOOP 1")
+        console.log("timeshare:", timeShare)
+        console.log("finaltime: ", finalTime)
+        console.log("finalprice:", finalPrice)
+        console.log("sntKWhArray[i].price: ", sntKWhArray[i].price)
+      } else if (!(i === sntKWhArray.length - 1)) {
+        const timeShare = 60 / finalTime;
+        finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
+        console.log(timeShare * finalKWh * sntKWhArray[i].price)
+        console.log("LOOP 2")
+        console.log("timeshare:", timeShare)
+        console.log("finaltime: ", finalTime)
+        console.log("finalprice:", finalPrice)
+        console.log("sntKWhArray[i].price: ", sntKWhArray[i].price)
+      } else {
+        const timeShare = endingDate.getMinutes() / finalTime;
+        finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
+        console.log("LOOP 3")
+        console.log("timeshare:", timeShare)
+        console.log("finaltime: ", finalTime)
+        console.log("finalprice:", finalPrice)
+        console.log("sntKWhArray[i].price: ", sntKWhArray[i].price)
+      }
+    }
 
     const newLoading = {
       date: `${selectedStartingDate}T${selectedStartingTime}:00.000+00:00`,
       hour: selectedHour,
       minute: selectedMinute,
-      price: 1,
-      kWh: parseFloat(selectedMeterNum - lastMeterNum).toFixed(2),
+      price: finalPrice.toFixed(3) < 0 ? 0 : finalPrice.toFixed(3),
+      kWh: finalKWh,
       meterNum: parseFloat(selectedMeterNum),
       sntkWh: sntKWhArray,
       fixedPrice: selectedFixedPrice,
@@ -146,7 +180,7 @@ function App() {
         if (response.ok) {
           window.alert('Latauskerta tallennettu');
           console.log('Loading saved:', newLoading);
-          window.location.reload();
+          //window.location.reload();
         } else {
           window.alert('Jokin meni pieleen');
           console.error('Error saving loading:', response.status);
@@ -163,7 +197,10 @@ function App() {
     <div className="div0">
       <div className="div1">
         <Hinta />
-        <Mittarilukema1 lastMeterNum={lastMeterNum} />
+        <Mittarilukema1
+          lastMeterNum={lastMeterNum}
+          onLastMeterNumChange={handleLastMeterNumChange}
+        />
         <Aika
           selectedStartingTime={selectedStartingTime}
           selectedStartingDate={selectedStartingDate}
