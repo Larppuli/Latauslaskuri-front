@@ -1,1 +1,1 @@
-Sovellus sähköauton latauksen hinnan selvittämiseen ja tallentamiseen, kun sähkön hinta vaihtelee pörssisähkön mukaan.
+Apuväline pörssisähköllä ladattavan sähkö- tai hybridiauton latauksen hinnan selvittämisen ja tallentamisen tueksi.
