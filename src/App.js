@@ -114,34 +114,25 @@ function App() {
       const jsonData = await response.json();
       if (i === selectedHour * 60 + selectedMinute + date.getMinutes()) {
         const timeShare = (60 - startingDate.getMinutes()) / finalTime;
-        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: parseFloat(timeShare * finalKWh * parseFloat(jsonData.price)) });
+        const price = parseFloat(timeShare * finalKWh * parseFloat(jsonData.price));
+        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: price });
+        finalPrice += price;
       }
       else if (i  >= 60) {
-        console.log(i)
-        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: (60 / finalTime) * finalKWh * parseFloat(jsonData.price) });
+        const price = parseFloat((60 / finalTime) * finalKWh * parseFloat(jsonData.price));
+        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: price });
+        finalPrice += price;
       }
       else {
-        console.log("tänne mentiin")
-        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: endingDate.getMinutes() / finalTime * finalKWh * parseFloat(jsonData.price) });
+        const price = endingDate.getMinutes() / finalTime * finalKWh * parseFloat(jsonData.price);
+        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: price });
+        finalPrice += price;
       }
       date.setHours(startingDate.getHours() + 1);
       date = startingDate;
       year = date.getFullYear();
       month = String(date.getMonth() + 1).padStart(2, '0');
       day = String(date.getDate()).padStart(2, '0');
-    }
-
-    for (let i = 0; i < sntKWhArray.length; i++) {
-      if (i === 0) {
-        const timeShare = (60 - startingDate.getMinutes()) / finalTime;
-        finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
-      } else if (!(i === sntKWhArray.length - 1)) {
-        const timeShare = 60 / finalTime;
-        finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
-      } else {
-        const timeShare = endingDate.getMinutes() / finalTime;
-        finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
-      }
     }
 
     const newLoading = {
