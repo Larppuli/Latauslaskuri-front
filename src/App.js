@@ -7,6 +7,7 @@ import Nappi from './Components/Nappi';
 import Aika from './Components/Aika';
 import Tuntivalitsin from './Components/Tuntivalitsin';
 import Kiintea from './Components/Kiintea';
+import Latauskerta from './Components/Latauskerta';
 
 function App() {
 
@@ -112,20 +113,22 @@ function App() {
     for (let i = selectedHour * 60 + selectedMinute + date.getMinutes(); i > 1; i -= 60) {
       const response = await fetch(`http://localhost:3001/${year}-${month}-${day}%${date.getHours()}`);
       const jsonData = await response.json();
+      const formattedHour = date.getHours().toString().padStart(2, '0') + ':00';
+
       if (i === selectedHour * 60 + selectedMinute + date.getMinutes()) {
         const timeShare = (60 - startingDate.getMinutes()) / finalTime;
         const price = parseFloat(timeShare * finalKWh * parseFloat(jsonData.price));
-        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: price });
+        sntKWhArray.push({ hour: formattedHour, kWhPrice: jsonData.price, price: price, kWh: timeShare * finalKWh });
         finalPrice += price;
       }
       else if (i  >= 60) {
         const price = parseFloat((60 / finalTime) * finalKWh * parseFloat(jsonData.price));
-        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: price });
+        sntKWhArray.push({ hour: formattedHour, kWhPrice: jsonData.price, price: price, kWh: (60 / finalTime) * finalKWh });
         finalPrice += price;
       }
       else {
         const price = endingDate.getMinutes() / finalTime * finalKWh * parseFloat(jsonData.price);
-        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: price });
+        sntKWhArray.push({ hour: formattedHour, kWhPrice: jsonData.price, price: price, kWh: endingDate.getMinutes() / finalTime * finalKWh });
         finalPrice += price;
       }
       date.setHours(startingDate.getHours() + 1);
@@ -208,6 +211,7 @@ function App() {
           onFixedPriceChange={handleFixedPriceChange}
         />
         <Nappi onSave={handleSave} />
+        <Latauskerta />
       </div>
     </div>
   );
