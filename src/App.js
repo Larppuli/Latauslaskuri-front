@@ -99,6 +99,8 @@ function App() {
     const endingDate = new Date(startingDate.getTime() + selectedMinute * 60000);
     endingDate.setMinutes(endingDate.getMinutes() + selectedHour * 60);
     const finalKWh = parseFloat(selectedMeterNum - lastMeterNum).toFixed(2);
+    const finalTime = selectedMinute + selectedHour * 60
+    let finalPrice = 0;
 
     const sntKWhArray = [];
 
@@ -110,7 +112,18 @@ function App() {
     for (let i = selectedHour * 60 + selectedMinute + date.getMinutes(); i > 1; i -= 60) {
       const response = await fetch(`http://localhost:3001/${year}-${month}-${day}%${date.getHours()}`);
       const jsonData = await response.json();
-      sntKWhArray.push({ hour: date.getHours(), price: jsonData.price });
+      if (i === selectedHour * 60 + selectedMinute + date.getMinutes()) {
+        const timeShare = (60 - startingDate.getMinutes()) / finalTime;
+        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: parseFloat(timeShare * finalKWh * parseFloat(jsonData.price)) });
+      }
+      else if (i  >= 60) {
+        console.log(i)
+        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: (60 / finalTime) * finalKWh * parseFloat(jsonData.price) });
+      }
+      else {
+        console.log("tänne mentiin")
+        sntKWhArray.push({ hour: date.getHours(), kWhPrice: jsonData.price, price: endingDate.getMinutes() / finalTime * finalKWh * parseFloat(jsonData.price) });
+      }
       date.setHours(startingDate.getHours() + 1);
       date = startingDate;
       year = date.getFullYear();
@@ -118,9 +131,6 @@ function App() {
       day = String(date.getDate()).padStart(2, '0');
     }
 
-    let finalPrice = 0;
-
-    const finalTime = selectedMinute + selectedHour * 60
     for (let i = 0; i < sntKWhArray.length; i++) {
       if (i === 0) {
         const timeShare = (60 - startingDate.getMinutes()) / finalTime;
