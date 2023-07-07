@@ -2,6 +2,8 @@ body {
   background-color: #023020;
 }
 
+
+
 .div1 {
     font-size: 40px;
     width: 95%;
@@ -40,10 +42,42 @@ body {
     padding-bottom: 10px;
   }
 
+  .div5 {
+    position: relative;
+    border-radius: 10px;
+    font-size: 30px;
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding-bottom: 25px;
+    margin-bottom: 30px;
+  }
+
+  .div6 {
+    margin-top: 80px;
+  }
+
   .p1 {
     font-size: 40px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .p2 {
+    margin-top: -20px;
+    margin-bottom: 8px;
+    padding-top: 30px;
+    margin-right: 10px;
+    text-align: center;
+  }
+  .flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 50px;
   }
 
   .form1 {
@@ -89,6 +123,52 @@ body {
   .aikavalitsin {
     font-size: 22px;
   }
+
+  .nappi1 {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #ffffff;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #ffffff79;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .nappi1:hover {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #ffffff;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #afafaf79;
+  }
+
+  .table {
+    border-collapse: collapse;
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .tr1 {
+    font-weight: 600;
+  }
+  
+  .table th,
+  .table td {
+    border: 1px solid white;
+    padding: 6px;
+    text-align: center;
+    text-align: center;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .table th {
+    color: white;
+  }
+
 
 .button-74 {
   align-items: center;

@@ -7,6 +7,7 @@ import Nappi from './Components/Nappi';
 import Aika from './Components/Aika';
 import Tuntivalitsin from './Components/Tuntivalitsin';
 import Kiintea from './Components/Kiintea';
+import Latauskerrat from './Components/Latauskerrat';
 
 function App() {
 
@@ -99,6 +100,8 @@ function App() {
     const endingDate = new Date(startingDate.getTime() + selectedMinute * 60000);
     endingDate.setMinutes(endingDate.getMinutes() + selectedHour * 60);
     const finalKWh = parseFloat(selectedMeterNum - lastMeterNum).toFixed(2);
+    const finalTime = selectedMinute + selectedHour * 60
+    let finalPrice = 0;
 
     const sntKWhArray = [];
 
@@ -110,28 +113,29 @@ function App() {
     for (let i = selectedHour * 60 + selectedMinute + date.getMinutes(); i > 1; i -= 60) {
       const response = await fetch(`http://localhost:3001/${year}-${month}-${day}%${date.getHours()}`);
       const jsonData = await response.json();
-      sntKWhArray.push({ hour: date.getHours(), price: jsonData.price });
+      const formattedHour = date.getHours().toString().padStart(2, '0') + ':00';
+
+      if (i === selectedHour * 60 + selectedMinute + date.getMinutes()) {
+        const timeShare = (60 - startingDate.getMinutes()) / finalTime;
+        const price = parseFloat(timeShare * finalKWh * parseFloat(jsonData.price));
+        sntKWhArray.push({ hour: formattedHour, kWhPrice: jsonData.price, price: price, kWh: timeShare * finalKWh });
+        finalPrice += price;
+      }
+      else if (i  >= 60) {
+        const price = parseFloat((60 / finalTime) * finalKWh * parseFloat(jsonData.price));
+        sntKWhArray.push({ hour: formattedHour, kWhPrice: jsonData.price, price: price, kWh: (60 / finalTime) * finalKWh });
+        finalPrice += price;
+      }
+      else {
+        const price = endingDate.getMinutes() / finalTime * finalKWh * parseFloat(jsonData.price);
+        sntKWhArray.push({ hour: formattedHour, kWhPrice: jsonData.price, price: price, kWh: endingDate.getMinutes() / finalTime * finalKWh });
+        finalPrice += price;
+      }
       date.setHours(startingDate.getHours() + 1);
       date = startingDate;
       year = date.getFullYear();
       month = String(date.getMonth() + 1).padStart(2, '0');
       day = String(date.getDate()).padStart(2, '0');
-    }
-
-    let finalPrice = 0;
-
-    const finalTime = selectedMinute + selectedHour * 60
-    for (let i = 0; i < sntKWhArray.length; i++) {
-      if (i === 0) {
-        const timeShare = (60 - startingDate.getMinutes()) / finalTime;
-        finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
-      } else if (!(i === sntKWhArray.length - 1)) {
-        const timeShare = 60 / finalTime;
-        finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
-      } else {
-        const timeShare = endingDate.getMinutes() / finalTime;
-        finalPrice += timeShare * finalKWh * sntKWhArray[i].price;
-      }
     }
 
     const newLoading = {
@@ -166,7 +170,7 @@ function App() {
           console.log('Loading saved:', newLoading);
           window.location.reload();
         } else {
-          window.alert('Jokin meni pieleen');
+          window.alert('Valittu päivämäärä on liian kaukana tulevaisuudessa');
           console.error('Error saving loading:', response.status);
         }
       } catch (error) {
@@ -207,6 +211,7 @@ function App() {
           onFixedPriceChange={handleFixedPriceChange}
         />
         <Nappi onSave={handleSave} />
+        <Latauskerrat />
       </div>
     </div>
   );
