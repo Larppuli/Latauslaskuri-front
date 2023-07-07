@@ -19,9 +19,9 @@ function Latauskerrat() {
   }, []);
 
   return (
-    <div className='div6'>
+    <div className='div6' style={{ display: 'flex', flexWrap: 'wrap' }}>
       {loadings.toReversed().map((loading) => (
-        <div key={loading._id} className='p2'>
+        <div key={loading._id} className='p2' style={{ flex: '1 0 25%' }}>
           <Latauskerta loading={loading} />
         </div>
       ))}
