@@ -7,7 +7,7 @@ import Nappi from './Components/Nappi';
 import Aika from './Components/Aika';
 import Tuntivalitsin from './Components/Tuntivalitsin';
 import Kiintea from './Components/Kiintea';
-import Latauskerta from './Components/Latauskerta';
+import Latauskerrat from './Components/Latauskerrat';
 
 function App() {
 
@@ -170,7 +170,7 @@ function App() {
           console.log('Loading saved:', newLoading);
           window.location.reload();
         } else {
-          window.alert('Jokin meni pieleen');
+          window.alert('Valittu päivämäärä on liian kaukana tulevaisuudessa');
           console.error('Error saving loading:', response.status);
         }
       } catch (error) {
@@ -211,7 +211,7 @@ function App() {
           onFixedPriceChange={handleFixedPriceChange}
         />
         <Nappi onSave={handleSave} />
-        <Latauskerta />
+        <Latauskerrat />
       </div>
     </div>
   );

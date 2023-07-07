@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const formatCustomDate = (dateString) => {
   const date = new Date(dateString);
@@ -9,37 +9,43 @@ const formatCustomDate = (dateString) => {
   return `${day}.${month}.${year}`;
 };
 
-function Latauskerta() {
-  const [loadings, setLoadings] = useState([]);
-  const [loading, setLoading] = useState();
+function Latauskerta({ loading }) {
+  const formattedDate = loading && loading.date ? formatCustomDate(loading.date) : '';
 
-  const getLoadings = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/loadings');
-      const loadingsData = await response.json();
-      setLoadings(loadingsData);
-    } catch (error) {
-      console.error('Error retrieving loadings:', error);
+  const handleDelete = async () => {
+    const confirmed = window.confirm('Haluatko varmasti poistaa latauskerran?');
+    
+    if (confirmed) {
+      try {
+        const response = await fetch(`http://localhost:3001/loadings/${loading._id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+  
+        if (response.ok) {
+          console.log('Object deleted successfully!');
+          window.location.reload();
+        } else {
+          console.error('Failed to delete object');
+        }
+      } catch (error) {
+        console.error('An error occurred while deleting the object:', error);
+      }
     }
   };
 
-  useEffect(() => {
-    getLoadings();
-  }, []);
-  
-  useEffect(() => {
-    if (loadings.length > 0) {
-      setLoading(loadings[0]);
-    }
-  }, [loadings]);
-
-  const formattedDate = loading && loading.date ? formatCustomDate(loading.date) : '';
-
   return (
-    <div className='div5'>
+    <div>
       {loading && (
-        <div>
-          <p className='p2'>{formattedDate}</p>
+        <div className='div5'>
+          <div className='flex-container'>
+            <p className='p2'>{formattedDate}</p>
+            <button className="nappi1" onClick={handleDelete}>
+              Poista
+            </button>
+          </div>
           <table className='table'>
             <thead>
               <tr>
@@ -54,15 +60,15 @@ function Latauskerta() {
                 <tr key={index}>
                   <td>{item.hour}</td>
                   <td>{item.kWh.toFixed(6)}</td>
-                  <td>{item.kWhPrice.toFixed(4)}</td>
+                  <td>{item.kWhPrice}</td>
                   <td>{item.price.toFixed(1)}</td>
                 </tr>
               ))}
               <tr className='tr1'>
                 <td>Yhteensä</td>
                 <td>{loading.kWh}</td>
-                <td>{(loading.price / loading.kWh).toFixed(4)}</td>
-                <td>{loading.price.toFixed(1)}</td>
+                <td>{(loading.price / loading.kWh).toFixed(3)}</td>
+                <td>{loading.price.toFixed(0)}</td>
               </tr>
             </tbody>
           </table>
