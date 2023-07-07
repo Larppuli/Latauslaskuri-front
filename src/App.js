@@ -8,6 +8,7 @@ import Aika from './Components/Aika';
 import Tuntivalitsin from './Components/Tuntivalitsin';
 import Kiintea from './Components/Kiintea';
 import Latauskerrat from './Components/Latauskerrat';
+import Tiedostolataus from './Components/Tiedostolataus';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
   const [selectedStartingTime, setSelectedStartingTime] = useState();
   const [selectedMeterNum, setSelectedMeterNum] = useState();
   const [selectedFixedPrice, setSelectedFixedPrice] = useState();
+  const [totalFixedPrice, setTotalFixedPrice] = useState();
 
   const handleHourChange = (hour) => {
     setSelectedHour(hour);
@@ -42,7 +44,6 @@ function App() {
 
   const handleLastMeterNumChange = (lastMeterNum) => {
     setLastMeterNum(lastMeterNum);
-    console.log(lastMeterNum)
   };
 
   const handleFixedPriceChange = (fixedPrice) => {
@@ -50,11 +51,11 @@ function App() {
   };
 
   useEffect(() => {
-    getLastItemMeterNum();
+    getPreviousValues();
     getLastItemFixedPrice();
   }, []);
 
-  const getLastItemMeterNum = async () => {
+  const getPreviousValues = async () => {
     try {
       const response = await fetch('http://localhost:3001/loadings');
   
@@ -63,6 +64,7 @@ function App() {
         const lastItem = data[data.length - 1];  
         if (lastItem) {
           setLastMeterNum(lastItem.meterNum)
+          setTotalFixedPrice(lastItem.totalFixedPrice || 0)
         } else {
           console.log('No items found');
         }
@@ -147,6 +149,7 @@ function App() {
       meterNum: parseFloat(selectedMeterNum),
       sntkWh: sntKWhArray,
       fixedPrice: selectedFixedPrice,
+      totalFixedPrice: totalFixedPrice + finalKWh * selectedFixedPrice,
     };
 
     if (
@@ -183,6 +186,7 @@ function App() {
 
   return (
     <div className="div0">
+      <Tiedostolataus/>
       <div className="div1">
         <Hinta />
         <Mittarilukema1
