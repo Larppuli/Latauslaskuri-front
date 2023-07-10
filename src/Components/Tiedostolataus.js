@@ -281,7 +281,7 @@ function Tiedostolataus() {
         }
       });
 
-      worksheet.cell(22, 3).value((loadings[loadings.length - 1].totalFixedPrice/100) + " €").style({
+      worksheet.cell(22, 3).value((loadings[loadings.length - 1].totalFixedPrice/100).toFixed(5) + " €").style({
         horizontalAlignment: "center",
         border: {
           right: true
