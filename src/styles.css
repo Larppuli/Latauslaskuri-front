@@ -2,7 +2,12 @@ body {
   background-color: #023020;
 }
 
-
+.div0 {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 30px;
+  margin-top: 30px;
+}
 
 .div1 {
     font-size: 40px;
@@ -140,6 +145,22 @@ body {
     position: absolute;
     top: 20px;
     right: 20px;
+    color: #ffffff;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #afafaf79;
+  }
+
+  .nappi2 {
+    color: #ffffff;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #ffffff79;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .nappi2:hover {
     color: #ffffff;
     font-size: 20px;
     border-radius: 10px;
