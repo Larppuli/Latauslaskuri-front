@@ -20,7 +20,11 @@ function App() {
   const [selectedStartingTime, setSelectedStartingTime] = useState();
   const [selectedMeterNum, setSelectedMeterNum] = useState();
   const [selectedFixedPrice, setSelectedFixedPrice] = useState();
-  const [totalFixedPrice, setTotalFixedPrice] = useState();
+  const [totalFixedPrice, setTotalFixedPrice] = useState(0);
+  const [totalKWh, setTotalKWh] = useState(0);
+  const [totalTransportPrice, setTotalTransportPrice] = useState(0);
+  const [electricityPrice, setElectricityPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleHourChange = (hour) => {
     setSelectedHour(hour);
@@ -65,6 +69,10 @@ function App() {
         if (lastItem) {
           setLastMeterNum(lastItem.meterNum)
           setTotalFixedPrice(lastItem.totalFixedPrice || 0)
+          setTotalKWh(lastItem.totalKWh || 0)
+          setTotalTransportPrice(lastItem.transportPrice || 0)
+          setElectricityPrice(lastItem.totalElectricityPrice || 0)
+          setTotalPrice(lastItem.totalPrice || 0)
         } else {
           console.log('No items found');
         }
@@ -144,12 +152,16 @@ function App() {
       date: `${selectedStartingDate}T${selectedStartingTime}:00.000+00:00`,
       hour: selectedHour,
       minute: selectedMinute,
-      price: finalPrice.toFixed(3) < 0 ? 0 : finalPrice.toFixed(3),
+      price: finalPrice < 0 ? 0 : finalPrice,
       kWh: finalKWh,
       meterNum: parseFloat(selectedMeterNum),
       sntkWh: sntKWhArray,
       fixedPrice: selectedFixedPrice,
       totalFixedPrice: totalFixedPrice + finalKWh * selectedFixedPrice,
+      totalKWh: parseFloat(totalKWh) + parseFloat(finalKWh),
+      transportPrice: totalTransportPrice + finalKWh * 7.6132,
+      totalElectricityPrice: electricityPrice + (finalPrice < 0 ? 0 : finalPrice),
+      totalPrice: totalPrice + (finalPrice < 0 ? 0 : finalPrice) + finalKWh * 7.6132 + finalKWh * selectedFixedPrice
     };
 
     if (
@@ -186,8 +198,8 @@ function App() {
 
   return (
     <div className="div0">
-      <Tiedostolataus/>
       <div className="div1">
+        <Tiedostolataus/>
         <Hinta />
         <Mittarilukema1
           lastMeterNum={lastMeterNum}
