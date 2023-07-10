@@ -20,10 +20,23 @@ function Tiedostolataus() {
       const workbook = await xlsxPopulate.fromBlankAsync();
       const worksheet = workbook.sheet(0);
   
-      let verIndex = 1;
-      let horIndex = 0;
+      let verIndex = 2;
+      let horIndex = 1;
       loadings.forEach((loading) => {
-        worksheet.cell(verIndex, horIndex + 3).value(loading.date.substring(0, 10)).style({ bold: true, horizontalAlignment: "center" });
+        worksheet.cell(verIndex, horIndex + 1).value(loading.date.substring(0, 10)).style({
+            border: {
+                top: true,
+                right: true,
+                left: true,
+                style: 'thick'
+            },
+            bold: true,
+            horizontalAlignment: "center",
+            fill: {
+              type: 'solid',
+              color: 'FDFFC0'
+            }
+          });
         worksheet.column(horIndex + 3).width(11);
   
         worksheet.cell(verIndex + 1, horIndex + 1).value("Latausaika").style({ horizontalAlignment: "center",
@@ -32,6 +45,10 @@ function Tiedostolataus() {
                 bottom: true,
                 left: true,
                 style: 'thick'
+            },
+            fill: {
+              type: 'solid',
+              color: 'E8E8E8'
             }
           });
           worksheet.column(horIndex + 1).width(11);
@@ -41,6 +58,10 @@ function Tiedostolataus() {
                 top: true,
                 bottom: true,
                 style: 'thick'
+          },
+          fill: {
+            type: 'solid',
+            color: 'E8E8E8'
           }
         });
 
@@ -49,6 +70,10 @@ function Tiedostolataus() {
                 top: true,
                 bottom: true,
                 style: 'thick'
+          },
+          fill: {
+            type: 'solid',
+            color: 'E8E8E8'
           }
         });
         worksheet.cell(verIndex + 1, horIndex + 4).value("EUR").style({ horizontalAlignment: "center",
@@ -57,6 +82,10 @@ function Tiedostolataus() {
                 bottom: true,
                 right: true,
                 style: 'thick'
+          },
+          fill: {
+            type: 'solid',
+            color: 'E8E8E8'
           }
         });
         loading.sntkWh.forEach((object) => {
@@ -104,20 +133,51 @@ function Tiedostolataus() {
                 style: 'thick'
             } 
         });
+        worksheet.cell(verIndex + 3, horIndex + 1).style({
+        border: {
+            left: true
+            } 
+        })
+        worksheet.cell(verIndex + 3, horIndex + 4).style({
+            border: {
+                right: true
+                } 
+            })
         worksheet.cell(verIndex + 4, horIndex + 1).value(("Aloitusaika")).style({ horizontalAlignment: "center",
         border: {
             left: true
             } 
         })
+        worksheet.cell(verIndex + 4, horIndex + 4).style({
+        border: {
+            right: true
+            } 
+        })
         worksheet.cell(verIndex + 4, horIndex + 2).value((loading.date.substring(11, 16))).style({ horizontalAlignment: "center" })
         worksheet.cell(verIndex + 5, horIndex + 1).value("Latausaika").style({ horizontalAlignment: "center",
         border: {
-            left: true
+            left: true,
+            bottom: true
             } 
         })
-        worksheet.cell(verIndex + 5, horIndex + 2).value(loading.hour + "h " + loading.minute+  "min").style({ horizontalAlignment: "center" })
+        worksheet.cell(verIndex + 5, horIndex + 2).value(loading.hour + "h " + loading.minute+  "min").style({ horizontalAlignment: "center",
+            border: {
+                bottom: true
+            } 
+        })
+        worksheet.cell(verIndex + 5, horIndex + 3).style({
+        border: {
+            bottom: true
+            } 
+        })
+        worksheet.cell(verIndex + 5, horIndex + 4).style({
+            border: {
+                bottom: true,
+                right: true
+            } 
+        })
 
-        verIndex = 1;
+        verIndex = 2;
         horIndex += 5;
       });
     
