@@ -25,9 +25,6 @@ function Tiedostolataus() {
       loadings.forEach((loading) => {
         worksheet.cell(verIndex, horIndex + 1).value(loading.date.substring(0, 10)).style({
             border: {
-                top: true,
-                right: true,
-                left: true,
                 style: 'thick'
             },
             bold: true,
@@ -51,7 +48,7 @@ function Tiedostolataus() {
               color: 'E8E8E8'
             }
           });
-          worksheet.column(horIndex + 1).width(11);
+          worksheet.column(horIndex + 1).width(14);
 
         worksheet.cell(verIndex + 1, horIndex + 2).value("kWh").style({ horizontalAlignment: "center",
             border: {
@@ -64,6 +61,8 @@ function Tiedostolataus() {
             color: 'E8E8E8'
           }
         });
+        worksheet.column(horIndex + 2).width(11);
+
 
         worksheet.cell(verIndex + 1, horIndex + 3).value("EUR/kWh").style({ horizontalAlignment: "center",
             border: {
@@ -160,6 +159,7 @@ function Tiedostolataus() {
             bottom: true
             } 
         })
+        worksheet.column(horIndex + 1).width(21);
         worksheet.cell(verIndex + 5, horIndex + 2).value(loading.hour + "h " + loading.minute+  "min").style({ horizontalAlignment: "center",
             border: {
                 bottom: true
@@ -180,7 +180,164 @@ function Tiedostolataus() {
         verIndex = 2;
         horIndex += 5;
       });
-    
+      worksheet.cell(18, 2).value("Sähkö yhteensä").style({
+        horizontalAlignment: "center",
+        border: {
+          top: true,
+          left: true,
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(18, 3).value(loadings[loadings.length - 1].totalKWh + " kWh").style({
+        horizontalAlignment: "center",
+        border: {
+          top: true,
+          right: true,
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(19, 2).value("Siirtomaksu per kWh").style({
+        horizontalAlignment: "center",
+        border: {
+          left: true
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(19, 3).value("0.076132 €").style({
+        horizontalAlignment: "center",
+        border: {
+          right: true
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(20, 2).value("Siirtomaksu yhteensä").style({
+        horizontalAlignment: "center",
+        border: {
+          left: true
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(20, 3).value((loadings[loadings.length - 1].transportPrice/100).toFixed(2) + " €").style({
+        horizontalAlignment: "center",
+        border: {
+          right: true
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(21, 2).value("Pörssisähkön marginaali").style({
+        horizontalAlignment: "center",
+        border: {
+          left: true
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(21, 3).value((loadings[0].fixedPrice/100) + " €").style({
+        horizontalAlignment: "center",
+        border: {
+          right: true
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(22, 2).value("Marginaali yhteensä").style({
+        horizontalAlignment: "center",
+        border: {
+          left: true
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(22, 3).value((loadings[loadings.length - 1].totalFixedPrice/100) + " €").style({
+        horizontalAlignment: "center",
+        border: {
+          right: true
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(23, 2).value("Sähkö yhteensä").style({
+        horizontalAlignment: "center",
+        border: {
+          left: true
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(23, 3).value((loadings[loadings.length - 1].totalElectricityPrice/100).toFixed(2) + " €").style({
+        horizontalAlignment: "center",
+        border: {
+          right: true
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(24, 2).value("Veloitetaan").style({
+        horizontalAlignment: "center",
+        bold: true,
+        border: {
+            style: "thick"
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+
+      worksheet.cell(24, 3).value((loadings[loadings.length - 1].totalPrice/100).toFixed(2) + " €").style({
+        horizontalAlignment: "center",
+        bold: true,
+        border: {
+            style: "thick"
+        },
+        fill: {
+          type: 'solid',
+          color: 'E8E8E8'
+        }
+      });
+            
       // Convert the workbook to a buffer
       const buffer = await workbook.outputAsync();
   
