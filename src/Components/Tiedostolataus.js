@@ -338,19 +338,15 @@ function Tiedostolataus() {
         }
       });
             
-      // Convert the workbook to a buffer
       const buffer = await workbook.outputAsync();
   
-      // Create a Blob from the buffer
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
   
-      // Create a URL for the Blob
       const url = URL.createObjectURL(blob);
   
-      // Create a link element and trigger the download
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'data.xlsx';
+      link.download = 'Porssisahko_latausveloitukset.xlsx';
       link.click();
     } catch (error) {
       console.error('Error generating Excel file:', error);
@@ -362,7 +358,7 @@ function Tiedostolataus() {
       }, []);
 
   return (
-    <div>
+    <div className='div0'>
         <button className='nappi2' onClick={handleDownload} >Lataa tiedosto</button>
     </div>
   );
