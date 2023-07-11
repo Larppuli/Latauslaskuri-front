@@ -1,10 +1,9 @@
 import React from 'react';
 
 const formatCustomDate = (dateString) => {
-  const date = new Date(dateString);
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
+  const day = dateString.substring(8, 10);
+  const month = dateString.substring(5, 7);
+  const year = dateString.substring(0, 4);
 
   return `${day}.${month}.${year}`;
 };
