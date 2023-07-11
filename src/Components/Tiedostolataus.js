@@ -108,14 +108,16 @@ function Tiedostolataus() {
                 bottom: true,
                 left: true,
                 style: 'thick'
-            }
+            },
+            bold: true,
         });
         worksheet.cell(verIndex + 2, horIndex + 2).value(loading.kWh).style({ horizontalAlignment: "center",
             border: {
                 top: true,
                 bottom: true,
                 style: 'thick'
-            } 
+            },
+            bold: true
         });
         worksheet.cell(verIndex + 2, horIndex + 4).value((loading.price / 100).toFixed(2)).style({ horizontalAlignment: "center",
             border: {
@@ -123,7 +125,8 @@ function Tiedostolataus() {
                 bottom: true,
                 right: true,
                 style: 'thick'
-            } 
+            },
+            bold: true
         });
         worksheet.cell(verIndex + 2, horIndex + 3).style({ horizontalAlignment: "center",
             border: {
