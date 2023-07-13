@@ -1,8 +1,12 @@
 body {
-  background-color: #023020;
+  background-color: #6c8879;
 }
-
-
+.div0 {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 0px;
+  margin-top: 35px;
+}
 
 .div1 {
     font-size: 40px;
@@ -13,6 +17,8 @@ body {
     top: 46%;
     left: 50%;
     transform: translate(-50%, -50%);
+    margin-right: 10px;
+    margin-top: 10px;
   }
 
   .div2 {
@@ -57,6 +63,14 @@ body {
 
   .div6 {
     margin-top: 80px;
+  }
+
+  .testdiv {
+    font-size: 200px;
+    text-align: center;
+    padding-top: 200px;
+    font-family: Impact, fantasy;
+
   }
 
   .p1 {
@@ -146,6 +160,23 @@ body {
     background-color: #afafaf79;
   }
 
+  .nappi2 {
+    color: #ffffff;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #ffffff79;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .nappi2:hover {
+    color: #ffffff;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: #afafaf79;
+  }
+
   .table {
     border-collapse: collapse;
     width: 95%;
@@ -198,10 +229,10 @@ body {
 .button-74:after {
   background-image: linear-gradient(
     -225deg,
-    #3700fd 0%,
-    #1d05a2 29%,
-    #4e6dd1 67%,
-    #7DF9FF 100%
+    #a9a9a9 0%,
+    #494949 29%,
+    #727272 67%,
+    #bebebe 100%
   );
   border-radius: 8px;
   content: "";
@@ -263,4 +294,47 @@ body {
   to {
     background-position: 200% center;
   }
+}
+
+nav {
+  background-color: #101c0c;
+  padding: 14px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  border-bottom: 1px solid rgb(255, 255, 255);
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav li {
+  margin-right: 10px;
+  padding-left: 10px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  padding: 5px 10px;
+  transition: background-color 0.3s, color 0.2s;
+  font-family: Marker Felt, fantasy;
+  border-radius: 6px;
+
+}
+
+nav a:hover {
+  background-color: #464646;
+  color: #fff;
+}
+
+.navbar a.active {
+  background-color: #333;
+  color: #fff;
 }
