@@ -2,9 +2,9 @@ import React from 'react';
 
 function Kotivalikko() {
   return (
-<div>
-    Moro
-</div>
+    <div className='testdiv'>
+        Etusivu
+    </div>
   );
 }
 
