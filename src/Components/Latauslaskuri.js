@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../styles.css';
-import Hinta from './Hinta';
 import Mittarilukema1 from './Mittarilukema1';
 import Mittarilukema2 from './Mittarilukema2';
 import Nappi from './Nappi';
@@ -8,6 +7,7 @@ import Aika from './Aika';
 import Tuntivalitsin from './Tuntivalitsin';
 import Kiintea from './Kiintea';
 import Latauskerrat from './Latauskerrat';
+import Tiedostolataus from './Tiedostolataus';
 
 function Latauslaskuri() {
 
@@ -184,7 +184,7 @@ function Latauslaskuri() {
   return (
     <div className="div0">
       <div className="div1">
-        <Hinta />
+        <Tiedostolataus/>
         <Mittarilukema1
           lastMeterNum={lastMeterNum}
           onLastMeterNumChange={handleLastMeterNumChange}
