@@ -8,6 +8,7 @@ import Aika from './Components/Aika';
 import Tuntivalitsin from './Components/Tuntivalitsin';
 import Kiintea from './Components/Kiintea';
 import Latauskerrat from './Components/Latauskerrat';
+import Tiedostolataus from './Components/Tiedostolataus';
 
 function App() {
 
@@ -19,6 +20,11 @@ function App() {
   const [selectedStartingTime, setSelectedStartingTime] = useState();
   const [selectedMeterNum, setSelectedMeterNum] = useState();
   const [selectedFixedPrice, setSelectedFixedPrice] = useState();
+  const [totalFixedPrice, setTotalFixedPrice] = useState(0);
+  const [totalKWh, setTotalKWh] = useState(0);
+  const [totalTransportPrice, setTotalTransportPrice] = useState(0);
+  const [electricityPrice, setElectricityPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleHourChange = (hour) => {
     setSelectedHour(hour);
@@ -42,7 +48,6 @@ function App() {
 
   const handleLastMeterNumChange = (lastMeterNum) => {
     setLastMeterNum(lastMeterNum);
-    console.log(lastMeterNum)
   };
 
   const handleFixedPriceChange = (fixedPrice) => {
@@ -50,11 +55,11 @@ function App() {
   };
 
   useEffect(() => {
-    getLastItemMeterNum();
+    getPreviousValues();
     getLastItemFixedPrice();
   }, []);
 
-  const getLastItemMeterNum = async () => {
+  const getPreviousValues = async () => {
     try {
       const response = await fetch('http://localhost:3001/loadings');
   
@@ -63,6 +68,11 @@ function App() {
         const lastItem = data[data.length - 1];  
         if (lastItem) {
           setLastMeterNum(lastItem.meterNum)
+          setTotalFixedPrice(lastItem.totalFixedPrice || 0)
+          setTotalKWh(lastItem.totalKWh || 0)
+          setTotalTransportPrice(lastItem.transportPrice || 0)
+          setElectricityPrice(lastItem.totalElectricityPrice || 0)
+          setTotalPrice(lastItem.totalPrice || 0)
         } else {
           console.log('No items found');
         }
@@ -142,11 +152,16 @@ function App() {
       date: `${selectedStartingDate}T${selectedStartingTime}:00.000+00:00`,
       hour: selectedHour,
       minute: selectedMinute,
-      price: finalPrice.toFixed(3) < 0 ? 0 : finalPrice.toFixed(3),
+      price: finalPrice < 0 ? 0 : finalPrice,
       kWh: finalKWh,
       meterNum: parseFloat(selectedMeterNum),
       sntkWh: sntKWhArray,
       fixedPrice: selectedFixedPrice,
+      totalFixedPrice: totalFixedPrice + finalKWh * selectedFixedPrice,
+      totalKWh: parseFloat(totalKWh) + parseFloat(finalKWh),
+      transportPrice: totalTransportPrice + finalKWh * 7.6132,
+      totalElectricityPrice: electricityPrice + (finalPrice < 0 ? 0 : finalPrice),
+      totalPrice: totalPrice + (finalPrice < 0 ? 0 : finalPrice) + finalKWh * 7.6132 + finalKWh * selectedFixedPrice
     };
 
     if (
@@ -184,6 +199,7 @@ function App() {
   return (
     <div className="div0">
       <div className="div1">
+        <Tiedostolataus/>
         <Hinta />
         <Mittarilukema1
           lastMeterNum={lastMeterNum}
