@@ -1,5 +1,5 @@
 body {
-  background-color: #023020;
+  background-color: #00250a;
 }
 
 .div0 {
@@ -55,7 +55,7 @@ body {
     margin: 0 auto;
     text-align: center;
     color: white;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(122, 122, 122, 0.373);
     padding-bottom: 25px;
     margin-bottom: 30px;
   }
