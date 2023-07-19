@@ -9,7 +9,7 @@ function Kilometrilukema2({ onKilometerChange }) {
 
   return (
     <div className="div2">
-        <input className="input4" type="number" step="1" onChange={handleKilometerChange} placeholder="Kilometrilukema latauksen jälkeen" />
+        <input className="input4" type="number" step="1" onChange={handleKilometerChange} placeholder="Kilometrilukema ajon jälkeen" />
     </div>
   );
 }
