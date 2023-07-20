@@ -1,7 +1,6 @@
 import React from 'react';
 
 function Ajoaika({ selectedStartingTime, selectedEndingTime, onStartingTimeChange, onEndingTimeChange }) {
-
   const handleStartingTimeChange = (event) => {
     const selectedTime = event.target.value;
     onStartingTimeChange(selectedTime);
