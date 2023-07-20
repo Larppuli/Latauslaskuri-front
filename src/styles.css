@@ -160,6 +160,17 @@ body {
     margin-top: 40px;
   }
 
+  .input5 {
+    font-size: 20px;
+    width: 169px;
+    text-align: center;
+    border-radius: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-color: black;
+    border-style: groove;
+    margin-top: 40px;
+  }
+
   .aika1 {
     font-size: 16px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
