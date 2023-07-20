@@ -1,5 +1,5 @@
 body {
-  background-color: #6c8879;
+  background-color: #1e1e1e;
 }
 .div0 {
   display: flex;
@@ -65,11 +65,19 @@ body {
     margin-top: 80px;
   }
 
+  .div7 {
+    padding-top: 10px;
+    font-size: 30px;
+    display:grid;
+    place-items: center;
+  }
+
   .testdiv {
     font-size: 200px;
     text-align: center;
     padding-top: 200px;
     font-family: Impact, fantasy;
+    color: rgb(0, 0, 0);
 
   }
 
@@ -77,6 +85,11 @@ body {
     font-size: 40px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .p2 {
+    font-size: 22px;
+    color: white;
   }
 
   .p2 {
@@ -99,6 +112,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     padding-bottom: 10px;
+    color: white;
   }
 
   .input1 {
@@ -125,6 +139,38 @@ body {
     margin-right: 5px;
   }
 
+  .input3 {
+    font-size: 20px;
+    width: 100px;
+    text-align: center;
+    border-radius: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-color: black;
+    border-style: groove;
+  }
+
+  .input4 {
+    font-size: 20px;
+    width: 337px;
+    text-align: center;
+    border-radius: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-color: black;
+    border-style: groove;
+    margin-top: 40px;
+  }
+
+  .input5 {
+    font-size: 20px;
+    width: 169px;
+    text-align: center;
+    border-radius: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border-color: black;
+    border-style: groove;
+    margin-top: 40px;
+  }
+
   .aika1 {
     font-size: 16px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -142,6 +188,7 @@ body {
     position: absolute;
     top: 20px;
     right: 20px;
+    top: 7px;
     color: #ffffff;
     font-size: 20px;
     border-radius: 10px;
@@ -154,6 +201,7 @@ body {
     position: absolute;
     top: 20px;
     right: 20px;
+    top: 7px;
     color: #ffffff;
     font-size: 20px;
     border-radius: 10px;
@@ -297,14 +345,14 @@ body {
 }
 
 nav {
-  background-color: #101c0c;
+  background-color: #121212;
   padding: 14px;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 999;
-  border-bottom: 1px solid rgb(255, 255, 255);
+  border-bottom: 1px solid rgb(115, 115, 115);
 }
 
 nav ul {
@@ -337,4 +385,44 @@ nav a:hover {
 .navbar a.active {
   background-color: #333;
   color: #fff;
+}
+
+.lever-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  background-color: #d9d9d9;
+}
+
+.lever-switch::after {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.lever-switch input {
+  display: none;
+}
+
+.lever-switch .lever {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #414141;
+  transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  background-color: rgb(41, 168, 2);
+}
+
+.lever-switch input:checked + .lever {
+  transform: translateX(30px);
+  background-color: rgb(168, 2, 2);
 }

@@ -42,7 +42,6 @@ function Latauslaskuri() {
 
   const handleLastMeterNumChange = (lastMeterNum) => {
     setLastMeterNum(lastMeterNum);
-    console.log(lastMeterNum)
   };
 
   const handleFixedPriceChange = (fixedPrice) => {
@@ -167,11 +166,9 @@ function Latauslaskuri() {
 
         if (response.ok) {
           window.alert('Latauskerta tallennettu');
-          console.log('Loading saved:', newLoading);
           window.location.reload();
         } else {
           window.alert('Valittu päivämäärä on liian kaukana tulevaisuudessa');
-          console.error('Error saving loading:', response.status);
         }
       } catch (error) {
         console.error('Error saving loading:', error);
