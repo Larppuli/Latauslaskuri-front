@@ -58,7 +58,7 @@ function Latauskerta({ loading }) {
               {loading.sntkWh.map((item, index) => (
                 <tr key={index}>
                   <td>{item.hour}</td>
-                  <td>{item.kWh.toFixed(6)}</td>
+                  <td>{item.kWh.toFixed(1)}</td>
                   <td>{item.kWhPrice}</td>
                   <td>{item.price.toFixed(1)}</td>
                 </tr>

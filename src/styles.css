@@ -1,5 +1,5 @@
 body {
-  background-color: #1e1e1e;
+  background-color: #181922;
 }
 .div0 {
   display: flex;
@@ -52,7 +52,7 @@ body {
     position: relative;
     border-radius: 10px;
     font-size: 30px;
-    width: 600px;
+    width: 340px;
     margin: 0 auto;
     text-align: center;
     color: white;
@@ -72,8 +72,21 @@ body {
     place-items: center;
   }
 
+  .div8 {
+    position: relative;
+    border-radius: 10px;
+    font-size: 30px;
+    width: 350px;
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding-bottom: 25px;
+    margin-bottom: 30px;
+  }
+
   .testdiv {
-    font-size: 200px;
+    font-size: 100px;
     text-align: center;
     padding-top: 200px;
     font-family: Impact, fantasy;
@@ -226,6 +239,7 @@ body {
   }
 
   .table {
+    font-size: 20px;
     border-collapse: collapse;
     width: 95%;
     margin: 0 auto;
@@ -345,14 +359,14 @@ body {
 }
 
 nav {
-  background-color: #121212;
+  background-color: #1c202b;
   padding: 14px;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 999;
-  border-bottom: 1px solid rgb(115, 115, 115);
+  border-bottom: 0.5px solid rgb(115, 115, 115);
 }
 
 nav ul {
@@ -363,13 +377,12 @@ nav ul {
 }
 
 nav li {
-  margin-right: 10px;
-  padding-left: 10px;
+  margin-right: 5px;
 }
 
 nav a {
   text-decoration: none;
-  color: #333;
+  color: #404040;
   padding: 5px 10px;
   transition: background-color 0.3s, color 0.2s;
   font-family: Marker Felt, fantasy;
