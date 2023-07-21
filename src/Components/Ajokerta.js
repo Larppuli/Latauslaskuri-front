@@ -9,7 +9,7 @@ const formatCustomDate = (dateString) => {
 };
 
 function Ajokerta({ driving }) {
-  const formattedDate = loading && loading.date ? formatCustomDate(loading.date) : '';
+  const formattedDate = driving && driving.date ? formatCustomDate(driving.date) : '';
 
   const handleDelete = async () => {
     const confirmed = window.confirm('Haluatko varmasti poistaa ajokerran?');
@@ -37,8 +37,8 @@ function Ajokerta({ driving }) {
 
   return (
     <div>
-      {loading && (
-        <div className='div5'>
+      {driving && (
+        <div className='div8'>
           <div className='flex-container'>
             <p className='p2'>{formattedDate}</p>
             <button className="nappi1" onClick={handleDelete}>
@@ -48,26 +48,14 @@ function Ajokerta({ driving }) {
           <table className='table'>
             <thead>
               <tr>
-                <th>Latausaika</th>
-                <th>kWh</th>
-                <th>Snt/kWh</th>
-                <th>Snt</th>
+                <th>Kuski</th>
+                <th>Pituus</th>
               </tr>
             </thead>
             <tbody>
-              {loading.sntkWh.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.hour}</td>
-                  <td>{item.kWh.toFixed(6)}</td>
-                  <td>{item.kWhPrice}</td>
-                  <td>{item.price.toFixed(1)}</td>
-                </tr>
-              ))}
-              <tr className='tr1'>
-                <td>Yhteensä</td>
-                <td>{loading.kWh}</td>
-                <td>{(loading.price / loading.kWh).toFixed(3)}</td>
-                <td>{loading.price.toFixed(0)}</td>
+              <tr>
+                <td>{(driving.driver)}</td>
+                <td>{driving.kilometers} km</td>
               </tr>
             </tbody>
           </table>
