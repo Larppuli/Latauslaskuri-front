@@ -10,6 +10,7 @@ import Ajoreitti from './Ajoreitti';
 import Nappi from './Nappi';
 import Ajovali from './Ajovali';
 import Kuski from './Kuski';
+import Ajokerrat from './Ajokerrat';
 
 function Paivakirja() {
   const [lastKilometer, setLastKilometer] = useState();
@@ -84,7 +85,7 @@ function Paivakirja() {
 
     if (
         (!isEnabled && selectedStartingDate && selectedKilometer && selectedDriver) ||
-         (isEnabled && selectedRoute && selectedStartingTime && selectedStartingDate && selectedKilometer && !selectedDriver==="Kuski")
+         (isEnabled && selectedRoute && selectedStartingTime && selectedStartingDate && selectedKilometer && selectedDriver)
       ) {
         try {
           const response = await fetch('http://localhost:3001/drivings', {
@@ -171,6 +172,7 @@ function Paivakirja() {
         </div>
       )}
       <Nappi onSave={handleSave}/>
+      <Ajokerrat/>
     </div>
   );
 }
