@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles.css';
 import Kilometrilukema1 from './Kilometrilukema1';
-import Tiedostolataus from './Tiedostolataus';
 import Ajopaiva from './Ajopaiva';
 import Kilometrilukema2 from './Kilometrilukema2';
 import Yksityisajovalitsin from './Yksityisajovalitsin';
@@ -11,6 +10,8 @@ import Nappi from './Nappi';
 import Ajovali from './Ajovali';
 import Kuski from './Kuski';
 import Ajokerrat from './Ajokerrat';
+import Tiedostolataus2 from './Tiedostolataus2';
+import Ajontarkoitus from './Ajontarkoitus';
 
 function Paivakirja() {
   const [lastKilometer, setLastKilometer] = useState();
@@ -23,6 +24,8 @@ function Paivakirja() {
   const [selectedStartingPlace, setSelectedStartingPlace] = useState();
   const [selectedEndingPlace, setSelectedEndingPlace] = useState();
   const [selectedDriver, setSelectedDriver] = useState();
+  const [selectedReason, setSelectedReason] = useState();
+
 
   const handleLastKilometerChange = (lastKilometer) => {
     setLastKilometer(lastKilometer);
@@ -64,6 +67,10 @@ function Paivakirja() {
     setSelectedDriver(driver);
   };
 
+  const handleReasonChange = (reason) => {
+    setSelectedReason(reason);
+  };
+
   useEffect(() => {
     getLastItemLastKilometer();
   }, []);
@@ -74,18 +81,20 @@ function Paivakirja() {
         date: selectedStartingDate,
         kilometerNum: selectedKilometer,
         kilometers: selectedKilometer - lastKilometer,
-        isPrivateDriving: !isEnabled,
+        lastKilometer: lastKilometer,
+        isPrivateDriving: isEnabled ? 'Työajo' : 'Yksityisajo',
         startingTime: selectedStartingTime,
         endingTime: selectedEndingTime,
         route: selectedRoute,
         selectedStartingPlace: selectedStartingPlace,
         selectedEndingPlace: selectedEndingPlace,
-        driver: selectedDriver
+        driver: selectedDriver,
+        reason: isEnabled ? selectedReason : "Yksityisajo",
     }
 
     if (
         (!isEnabled && selectedStartingDate && selectedKilometer && selectedDriver) ||
-         (isEnabled && selectedRoute && selectedStartingTime && selectedStartingDate && selectedKilometer && selectedDriver)
+         (isEnabled && selectedRoute && selectedStartingTime && selectedStartingDate && selectedKilometer && selectedDriver && selectedReason)
       ) {
         try {
           const response = await fetch('http://localhost:3001/drivings', {
@@ -133,7 +142,7 @@ function Paivakirja() {
 
   return (
     <div className='div1'>
-        <Tiedostolataus/>
+        <Tiedostolataus2/>
         <Kilometrilukema1
           lastKilometer={lastKilometer}
           onLastKilometerChange={handleLastKilometerChange}
@@ -169,6 +178,10 @@ function Paivakirja() {
             onStartingPlaceChange={handleStartingPlaceChange}
             onEndingPlaceChange={handleEndingPlaceChange}
           />
+          <Ajontarkoitus
+            selectedReason={selectedReason}
+            onReasonChange={handleReasonChange}
+            />
         </div>
       )}
       <Nappi onSave={handleSave}/>
