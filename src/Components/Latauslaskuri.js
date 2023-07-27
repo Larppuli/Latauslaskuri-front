@@ -7,7 +7,7 @@ import Aika from './Aika';
 import Tuntivalitsin from './Tuntivalitsin';
 import Kiintea from './Kiintea';
 import Latauskerrat from './Latauskerrat';
-import Tiedostolataus from './Tiedostolataus';
+import Tiedostolataus1 from './Tiedostolataus1';
 
 function Latauslaskuri() {
 
@@ -181,7 +181,7 @@ function Latauslaskuri() {
   return (
     <div className="div0">
       <div className="div1">
-        <Tiedostolataus/>
+        <Tiedostolataus1/>
         <Mittarilukema1
           lastMeterNum={lastMeterNum}
           onLastMeterNumChange={handleLastMeterNumChange}
