@@ -220,7 +220,7 @@ function Tiedostolataus2() {
             }
         });
 
-        worksheet.column(13).width(14);
+        worksheet.column(13).width(16);
 
         worksheet.cell(6, 14).value("Yksitysajo km").style({
             bold: true,
@@ -300,9 +300,44 @@ function Tiedostolataus2() {
                 border: true,
             });
 
+            worksheet.cell(8, 16).value("* Vapaassa autoedussa perusarvoon lisättävästä käyttökustannusten osuudesta vähennetään:");
+            worksheet.cell(9, 16).value("1.     0,08 euroa kilometriltä tai 120 euroa kuukaudessa, jos auton ainoa mahdollinen käyttövoima on sähkö.");
+            worksheet.cell(10, 16).value("2.     0,04 euroa kilometriltä tai 60 euroa kuukaudessa, jos ulkoisesta lähteestä ladattavan auton käyttövoima on sähkö ja moottoribensiini tai sähkö ja dieselöljy taikka auton käyttövoima on metaanista koostuva polttoaine.");
+
             index += 1;
+        });
+        worksheet.cell(index + 1, 2).value("Päivämäärä ja allekirjoitus").style({
+            italic: true
+        });
+        worksheet.cell(index + 2, 5).value("Timo Talvitie").style({
+            border:{
+                top: true
+            },
+            horizontalAlignment: "center",
+         });
+
+         worksheet.range(index + 2, 5, index + 2, 6).merged(true);
+
+         worksheet.cell(index + 2, 6).style({
+            border:{
+                top: true
+            }
         })
+
+        worksheet.cell(index , 12).value("Kuukauden yksityisajot yhteensä km");
+
+        let totalKilometers = 0;
+        drivings.forEach((driving) => {
+
+            if (driving.isPrivateDriving === "Yksityisajo") {
+              totalKilometers += driving.kilometers;
+            }
+          });
     
+          worksheet.cell(index, 14).value(totalKilometers).style({
+            horizontalAlignment: "center"
+         });
+        
       const buffer = await workbook.outputAsync();
       const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       const url = URL.createObjectURL(blob);
