@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import xlsxPopulate from 'xlsx-populate';
 
-function Tiedostolataus() {
+function Tiedostolataus1() {
 
     const [loadings, setLoadings] = useState([]);
   
@@ -367,4 +367,4 @@ function Tiedostolataus() {
   );
 }
 
-export default Tiedostolataus;
+export default Tiedostolataus1;
