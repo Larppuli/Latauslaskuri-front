@@ -199,41 +199,41 @@ body {
 
   .nappi1 {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    top: 7px;
-    color: #ffffff;
-    font-size: 20px;
-    border-radius: 10px;
-    background-color: #ffffff79;
+    right: 10px;
+    top: 11px;
+    color: #d3d3d3;
+    font-size: 13px;
+    border-radius: 7px;
+    background-color: #404040;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.2s;
     font-weight: 600;
   }
 
   .nappi1:hover {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    top: 7px;
+    right: 10px;
+    top: 11px;
     color: #ffffff;
-    font-size: 20px;
-    border-radius: 10px;
+    font-size: 13px;
+    border-radius: 7px;
     background-color: #afafaf79;
   }
 
   .nappi2 {
-    color: #ffffff;
-    font-size: 20px;
+    color: #d3d3d3;
+    font-size: 17px;
     border-radius: 10px;
-    background-color: #ffffff79;
+    background-color: #404040;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.2s;
     font-weight: 600;
     font-family: Arial, Helvetica, sans-serif;
   }
 
   .nappi2:hover {
     color: #ffffff;
-    font-size: 20px;
+    font-size: 17px;
     border-radius: 10px;
     background-color: #afafaf79;
   }
