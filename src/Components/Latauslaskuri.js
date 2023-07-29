@@ -19,6 +19,8 @@ function Latauslaskuri() {
   const [selectedStartingTime, setSelectedStartingTime] = useState();
   const [selectedMeterNum, setSelectedMeterNum] = useState();
   const [selectedFixedPrice, setSelectedFixedPrice] = useState();
+  const [lastLoading, setLastLoading] = useState(0);
+  const [fixPerKWh, setFixPerKWh] = useState();
 
   const handleHourChange = (hour) => {
     setSelectedHour(hour);
@@ -49,11 +51,12 @@ function Latauslaskuri() {
   };
 
   useEffect(() => {
-    getLastItemMeterNum();
     getLastItemFixedPrice();
+    getFixPerkWh();
+    getLastLoading();
   }, []);
 
-  const getLastItemMeterNum = async () => {
+  const getLastLoading = async () => {
     try {
       const response = await fetch('http://localhost:3001/loadings');
   
@@ -61,7 +64,7 @@ function Latauslaskuri() {
         const data = await response.json();
         const lastItem = data[data.length - 1];  
         if (lastItem) {
-          setLastMeterNum(lastItem.meterNum)
+          setLastLoading(lastItem)
         } else {
           console.log('No items found');
         }
@@ -93,6 +96,22 @@ function Latauslaskuri() {
       console.error('Error fetching loadings:', error);
     }
   };
+
+  
+  const getFixPerkWh = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/settings');
+  
+      if (response.ok) {
+        const data = await response.json();
+        setFixPerKWh(data[data.length - 1].fixPerKWh);  
+      } else {
+        console.error('Error fetching settings:', response.status);
+       }
+    } catch (error) {
+      console.error('Error fetching loadings:', error);
+    }
+};
 
   const handleSave = async () => {
     const startingDate = new Date(`${selectedStartingDate}T${selectedStartingTime}:00.000`);
@@ -146,6 +165,11 @@ function Latauslaskuri() {
       meterNum: parseFloat(selectedMeterNum),
       sntkWh: sntKWhArray,
       fixedPrice: selectedFixedPrice,
+      totalFixedPrice: lastLoading.totalFixedPrice + finalKWh * selectedFixedPrice,
+      totalKWh: lastLoading.totalKWh + finalKWh,
+      transportPrice: lastLoading.transportPrice + finalKWh * fixPerKWh,
+      totalElectricityPrice: lastLoading.totalElectricityPrice + finalPrice,
+      totalPrice: lastLoading.totalPrice + finalKWh * fixPerKWh + finalPrice
     };
 
     if (

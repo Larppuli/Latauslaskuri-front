@@ -4,6 +4,7 @@ import xlsxPopulate from 'xlsx-populate';
 function Tiedostolataus1() {
 
     const [loadings, setLoadings] = useState([]);
+    const [fixPerKWh, setFixPerKWh] = useState(0);
   
     const getLoadings = async () => {
       try {
@@ -14,6 +15,21 @@ function Tiedostolataus1() {
         console.error('Error retrieving loadings:', error);
       }
   }
+
+  const getFixPerkWh = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/settings');
+  
+      if (response.ok) {
+        const data = await response.json();
+        setFixPerKWh(data[data.length - 1].fixPerKWh);  
+      } else {
+        console.error('Error fetching settings:', response.status);
+       }
+    } catch (error) {
+      console.error('Error fetching loadings:', error);
+    }
+};
 
   const handleDownload = async () => {
     try {
@@ -218,7 +234,7 @@ function Tiedostolataus1() {
         }
       });
 
-      worksheet.cell(19, 3).value("0.076132 €").style({
+      worksheet.cell(19, 3).value(fixPerKWh).style({
         horizontalAlignment: "center",
         border: {
           right: true
@@ -358,6 +374,7 @@ function Tiedostolataus1() {
 
     useEffect(() => {
         getLoadings();
+        getFixPerkWh();
       }, []);
 
   return (
