@@ -85,6 +85,19 @@ body {
     margin-bottom: 30px;
   }
 
+  .div9 {
+    position: relative;
+    border-radius: 10px;
+    font-size: 30px;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+    color: white;
+    margin-bottom: 22px;
+    padding-bottom: 15px;
+    margin-top: 68px;
+  }
+
   .testdiv {
     font-size: 100px;
     text-align: center;
@@ -98,6 +111,16 @@ body {
     font-size: 40px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .p3 {
+    font-size: 40px;
+    margin-left: auto;
+    background-color: rgba(148, 148, 148, 0.492);
+    margin-right: auto;
+    width: 260px;
+    border-radius: 10px;
+    margin-top: 20px;
   }
 
   .p2 {
@@ -383,7 +406,7 @@ nav li {
 nav a {
   text-decoration: none;
   color: #404040;
-  padding: 5px 10px;
+  padding: 5px 8px;
   transition: background-color 0.3s, color 0.2s;
   font-family: Marker Felt, fantasy;
   border-radius: 6px;

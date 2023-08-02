@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles.css';
 import Kilometrilukema1 from './Kilometrilukema1';
-import Ajopaiva from './Ajopaiva';
+import Paivavalitsin from './Paivavalitsin';
 import Kilometrilukema2 from './Kilometrilukema2';
 import Yksityisajovalitsin from './Yksityisajovalitsin';
 import Ajoaika from './Ajoaika';
@@ -147,9 +147,10 @@ function Paivakirja() {
           lastKilometer={lastKilometer}
           onLastKilometerChange={handleLastKilometerChange}
         />
-        <Ajopaiva
+        <Paivavalitsin
           selectedStartingDate={selectedStartingDate}
           onStartingDateChange={handleStartingDateChange}
+          text="Ajopäivä"
         />
         <Kilometrilukema2
           selectedKilometer={selectedKilometer}

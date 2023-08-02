@@ -14,6 +14,9 @@ function Navbar() {
         <li>
           <NavLink to="/ajopaivakirja" activeclassname="active">Ajopäiväkirja</NavLink>
         </li>
+        <li>
+          <NavLink to="/asetukset" activeclassname="active">Asetukset</NavLink>
+        </li>
       </ul>
     </nav>
   );

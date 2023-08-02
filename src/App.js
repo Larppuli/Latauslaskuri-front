@@ -4,6 +4,7 @@ import Kotivalikko from './Components/Kotivalikko';
 import Latauslaskuri from './Components/Latauslaskuri';
 import Navbar from './Components/Navbar';
 import Paivakirja from './Components/Paivakirja';
+import Asetukset from './Components/Asetukset';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Kotivalikko />} />
         <Route path="/latauslaskuri" element={<Latauslaskuri />} />
         <Route path="/ajopaivakirja" element={<Paivakirja />} />
+        <Route path="/asetukset" element={<Asetukset />} />
       </Routes>
     </Router>
   );
