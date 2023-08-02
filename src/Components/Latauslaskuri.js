@@ -39,11 +39,11 @@ function Latauslaskuri() {
   };
 
   const handleMeterNumChange = (meterNum) => {
-    setSelectedMeterNum(meterNum);
+    setSelectedMeterNum(parseFloat(meterNum));
   };
-
+  
   const handleLastMeterNumChange = (lastMeterNum) => {
-    setLastMeterNum(lastMeterNum);
+    setLastMeterNum(parseFloat(lastMeterNum));
   };
 
   const handleFixedPriceChange = (fixedPrice) => {
@@ -65,6 +65,7 @@ function Latauslaskuri() {
         const lastItem = data[data.length - 1];  
         if (lastItem) {
           setLastLoading(lastItem)
+          setLastMeterNum(lastItem.meterNum)
         } else {
           console.log('No items found');
         }
@@ -117,7 +118,7 @@ function Latauslaskuri() {
     const startingDate = new Date(`${selectedStartingDate}T${selectedStartingTime}:00.000`);
     const endingDate = new Date(startingDate.getTime() + selectedMinute * 60000);
     endingDate.setMinutes(endingDate.getMinutes() + selectedHour * 60);
-    const finalKWh = parseFloat(selectedMeterNum - lastMeterNum).toFixed(2);
+    const finalKWh = parseFloat((selectedMeterNum - lastMeterNum).toFixed(2));
     const finalTime = selectedMinute + selectedHour * 60
     let finalPrice = 0;
 
@@ -156,20 +157,21 @@ function Latauslaskuri() {
       day = String(date.getDate()).padStart(2, '0');
     }
 
+    console.log(lastLoading.totalElectricityPrice)
     const newLoading = {
       date: `${selectedStartingDate}T${selectedStartingTime}:00.000+00:00`,
       hour: selectedHour,
       minute: selectedMinute,
-      price: finalPrice.toFixed(3) < 0 ? 0 : finalPrice.toFixed(3),
-      kWh: finalKWh,
+      price: finalPrice < 0 ? 0 : parseFloat(finalPrice.toFixed(3)),
+      kWh: parseFloat(finalKWh),
       meterNum: parseFloat(selectedMeterNum),
       sntkWh: sntKWhArray,
       fixedPrice: selectedFixedPrice,
       totalFixedPrice: lastLoading.totalFixedPrice + finalKWh * selectedFixedPrice,
-      totalKWh: lastLoading.totalKWh + finalKWh,
-      transportPrice: lastLoading.transportPrice + finalKWh * fixPerKWh,
-      totalElectricityPrice: lastLoading.totalElectricityPrice + finalPrice,
-      totalPrice: lastLoading.totalPrice + finalKWh * fixPerKWh + finalPrice
+      totalKWh: lastLoading.totalKWh + parseFloat(finalKWh),
+      transportPrice: lastLoading.transportPrice + parseFloat(finalKWh) * fixPerKWh * 100,
+      totalElectricityPrice: finalPrice < 0 ? lastLoading.totalElectricityPrice : lastLoading.totalElectricityPrice + finalPrice,
+      totalPrice: lastLoading.totalPrice + parseFloat(finalKWh) * fixPerKWh * 100 + (finalPrice < 0 ? 0 : finalPrice) + finalKWh * selectedFixedPrice,
     };
 
     if (
@@ -192,7 +194,7 @@ function Latauslaskuri() {
           window.alert('Latauskerta tallennettu');
           window.location.reload();
         } else {
-          window.alert('Valittu päivämäärä on liian kaukana tulevaisuudessa');
+          window.alert('Tarkista päivämäärä');
         }
       } catch (error) {
         console.error('Error saving loading:', error);
@@ -207,7 +209,7 @@ function Latauslaskuri() {
       <div className="div1">
         <Tiedostolataus1/>
         <Mittarilukema1
-          lastMeterNum={lastMeterNum}
+          lastMeterNum={lastLoading.meterNum}
           onLastMeterNumChange={handleLastMeterNumChange}
         />
         <Aika
