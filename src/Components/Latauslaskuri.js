@@ -8,6 +8,7 @@ import Tuntivalitsin from './Tuntivalitsin';
 import Kiintea from './Kiintea';
 import Latauskerrat from './Latauskerrat';
 import Tiedostolataus1 from './Tiedostolataus1';
+import Poistakaikki from './Poistakaikki';
 
 function Latauslaskuri() {
 
@@ -97,7 +98,6 @@ function Latauslaskuri() {
       console.error('Error fetching loadings:', error);
     }
   };
-
   
   const getFixPerkWh = async () => {
     try {
@@ -157,7 +157,7 @@ function Latauslaskuri() {
       day = String(date.getDate()).padStart(2, '0');
     }
 
-    console.log(lastLoading.totalElectricityPrice)
+    console.log(lastLoading)
     const newLoading = {
       date: `${selectedStartingDate}T${selectedStartingTime}:00.000+00:00`,
       hour: selectedHour,
@@ -167,11 +167,11 @@ function Latauslaskuri() {
       meterNum: parseFloat(selectedMeterNum),
       sntkWh: sntKWhArray,
       fixedPrice: selectedFixedPrice,
-      totalFixedPrice: lastLoading.totalFixedPrice + finalKWh * selectedFixedPrice,
-      totalKWh: lastLoading.totalKWh + parseFloat(finalKWh),
-      transportPrice: lastLoading.transportPrice + parseFloat(finalKWh) * fixPerKWh * 100,
-      totalElectricityPrice: finalPrice < 0 ? lastLoading.totalElectricityPrice : lastLoading.totalElectricityPrice + finalPrice,
-      totalPrice: lastLoading.totalPrice + parseFloat(finalKWh) * fixPerKWh * 100 + (finalPrice < 0 ? 0 : finalPrice) + finalKWh * selectedFixedPrice,
+      totalFixedPrice: lastLoading ? (lastLoading.totalFixedPrice + finalKWh * selectedFixedPrice) : (finalKWh * selectedFixedPrice),
+      totalKWh: lastLoading ? (lastLoading.totalKWh + parseFloat(finalKWh)) : parseFloat(finalKWh),
+      transportPrice: lastLoading ? (lastLoading.transportPrice + parseFloat(finalKWh) * fixPerKWh * 100) : (parseFloat(finalKWh) * fixPerKWh * 100),
+      totalElectricityPrice: lastLoading ? (lastLoading.totalElectricityPrice + finalPrice) : finalPrice,
+      totalPrice: lastLoading ? (lastLoading.totalPrice + parseFloat(finalKWh) * fixPerKWh * 100 + (finalPrice < 0 ? 0 : finalPrice) + finalKWh * selectedFixedPrice) : (parseFloat(finalKWh) * fixPerKWh * 100 + (finalPrice < 0 ? 0 : finalPrice) + finalKWh * selectedFixedPrice),
     };
 
     if (
@@ -207,7 +207,10 @@ function Latauslaskuri() {
   return (
     <div className="div0">
       <div className="div1">
-        <Tiedostolataus1/>
+        <div className='div0'>
+          <Tiedostolataus1/>
+          <Poistakaikki object="loadings"/>
+        </div>
         <Mittarilukema1
           lastMeterNum={lastLoading.meterNum}
           onLastMeterNumChange={handleLastMeterNumChange}

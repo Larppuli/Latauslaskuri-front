@@ -12,6 +12,7 @@ import Kuski from './Kuski';
 import Ajokerrat from './Ajokerrat';
 import Tiedostolataus2 from './Tiedostolataus2';
 import Ajontarkoitus from './Ajontarkoitus';
+import Poistakaikki from './Poistakaikki';
 
 function Paivakirja() {
   const [lastKilometer, setLastKilometer] = useState();
@@ -142,7 +143,10 @@ function Paivakirja() {
 
   return (
     <div className='div1'>
-        <Tiedostolataus2/>
+        <div className='div0'>
+          <Tiedostolataus2/>
+          <Poistakaikki object="drivings"/>
+        </div>
         <Kilometrilukema1
           lastKilometer={lastKilometer}
           onLastKilometerChange={handleLastKilometerChange}

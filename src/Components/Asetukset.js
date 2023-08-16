@@ -16,6 +16,7 @@ function Asetukset() {
     const [selectedCarBenefitDefault, setSelectedCarBenefitDefault] = useState();
     const [selectedFixPerKwh, setSelectedFixPerKwh] = useState();
     const [settings, setSettings] = useState({});
+    const [settingID, setSettingID] = useState();
 
     const handleVehicleChange = (vehicle) => {
         setSelectedVehicle(vehicle);
@@ -67,7 +68,19 @@ function Asetukset() {
   
       if (response.ok) {
         const data = await response.json();
-        setSettings(data[data.length - 1]);  
+        setSettings(data[data.length - 1]);
+        setSelectedVehicle(data[0].carName);
+        setSelectedRegNum(data[0].regNum);
+        setSelectedHandoverDate(data[0].handoverDate);
+        setSelectedBenefactor(data[0].benefactor);
+        setSelectedBeneficiary(data[0].beneficiary);
+        setSelectedBenefitPerKm(data[0].benefitPerKm);
+        setSelectedKmAtBeginning(data[0].kmAtBeginning);
+        setSelectedFixedAdd(data[0].fixedAdd);
+        setSelectedCarBenefitDefault(data[0].carBenefitDefault);
+        setSelectedFixPerKwh(data[0].fixPerKWh);
+        setSettingID(data[0]._id)
+
       } else {
         console.error('Error fetching settings:', response.status);
        }
@@ -93,8 +106,8 @@ function Asetukset() {
     
         if (selectedVehicle && selectedRegNum && selectedHandoverDate && selectedKmAtBeginning && selectedBenefactor && selectedBeneficiary && selectedFixedAdd && selectedCarBenefitDefault && selectedFixPerKwh) {
             try {
-              const response = await fetch('http://localhost:3001/settings', {
-                method: 'POST',
+              const response = await fetch(`http://localhost:3001/settings/${settingID}`, {
+                method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json',
                 },
@@ -145,28 +158,33 @@ function Asetukset() {
             selectedValue={selectedBenefitPerKm}
             onValueChange={handleBenefitPerKmChange} 
             name="Kilometrikohtainen autoedun määrä (€)"
-            defaultValue={settings.benefitPerKm}/>
+            defaultValue={settings.benefitPerKm}
+            selectedStep="0.01"/>
         <Numeroasetus 
             selectedValue={selectedKmAtBeginning}
             onValueChange={handleKmAtBeginningChange} 
             name="Kilometrimäärä luovutettaessa"
-            defaultValue={settings.kmAtBeginning}/>
+            defaultValue={settings.kmAtBeginning}
+            selectedStep="1"/>
         <Numeroasetus 
             selectedValue={selectedFixedAdd}
             onValueChange={handleFixedAddChange} 
             name="Kiinteä lisä (€)"
-            defaultValue={settings.fixedAdd}/>
+            defaultValue={settings.fixedAdd}
+            selectedStep="1"/>
         <Numeroasetus 
             selectedValue={selectedCarBenefitDefault}
             onValueChange={handleCarBenefitDefaultChange} 
             name="Vapaa autoedun perusarvo (€)"
-            defaultValue={settings.carBenefitDefault}/>
+            defaultValue={settings.carBenefitDefault}
+            selectedStep="1"/>
         <div className='p3'>Latauslaskuri</div>
         <Numeroasetus 
             selectedValue={selectedFixPerKwh}
             onValueChange={handleFixPerKwhChange} 
             name="Kiinteä kilowattitunnin lisähinta (€)"
-            defaultValue={settings.fixPerKWh            }/>
+            defaultValue={settings.fixPerKWh}
+            selectedStep="0.000001"/>
         <Nappi className='div3' onSave={handleSave}/>
     </div>
   );

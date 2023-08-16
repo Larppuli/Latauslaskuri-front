@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Numeroasetus({ onValueChange, selectedValue, name, defaultValue }) {
+function Numeroasetus({ onValueChange, selectedValue, name, defaultValue, selectedStep }) {
   const handleValueChange = (event) => {
     const selectedValue = event.target.value;
     onValueChange(selectedValue);
@@ -12,6 +12,7 @@ function Numeroasetus({ onValueChange, selectedValue, name, defaultValue }) {
       <input
         className="input1"
         type="number"
+        step={selectedStep}
         value={selectedValue !== undefined ? selectedValue : defaultValue !== undefined ? defaultValue : ''}
         onChange={handleValueChange}
       />
